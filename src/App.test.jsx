@@ -28,9 +28,9 @@ test('Renders counter display', () => {
 });
 
 test('Counter starts at 0', () => {
-    const wrapper = shallow(<App />);
-    const counterDisplay = wrapper.find('[data-test="counter-display"]');
-    expect(counterDisplay.length).toBe(1);
+    const wrapper = setup();
+    const initialCounterState = wrapper.state('counter');
+    expect(initialCounterState).toBe(0);
 });
 
 test('Clicking button increments counter display', () => {
