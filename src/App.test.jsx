@@ -5,7 +5,11 @@ import App from './App';
 
 configure({ adapter: new Adapter() });
 
-const setup = (props = {}, state = null) => shallow(<App {...props} />);
+const setup = (props = {}, state = null) => {
+    const wrapper = shallow(<App {...props} />);
+    if (state) wrapper.setState(state);
+    return wrapper;
+};
 
 const findByTestAttr = (wrapper, val) => wrapper.find(`[data-test='${val}']`);
 
@@ -34,5 +38,10 @@ test('Counter starts at 0', () => {
 });
 
 test('Clicking button increments counter display', () => {
-
+    const counter = 7;
+    const wrapper = setup(null, { counter });
+    const button = findByTestAttr(wrapper, 'increment-button');
+    button.simulate('click');
+    const counterDisplay = findByTestAttr(wrapper, 'counter-display');
+    expect(counterDisplay.text()).toContain(counter + 1);
 });
