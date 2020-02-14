@@ -5,22 +5,26 @@ import App from './App';
 
 configure({ adapter: new Adapter() });
 
+const setup = (props = {}, state = null) => shallow(<App {...props} />);
+
+const findByTestAttr = (wrapper, val) => wrapper.find(`[data-test='${val}']`);
+
 test('Renders without errors', () => {
-    const wrapper = shallow(<App />);
-    const appComponent = wrapper.find('[data-test="component-big-component"]');
+    const wrapper = setup();
+    const appComponent = findByTestAttr(wrapper, 'component-big-component');
     expect(appComponent.length).toBe(1);
 });
 
 test('Renders increment button', () => {
-    const wrapper = shallow(<App />);
-    const button = wrapper.find('[data-test="increment-button"]');
-    expect(button.length).toBe(1);
+    const wrapper = setup();
+    const appComponent = findByTestAttr(wrapper, 'increment-button');
+    expect(appComponent.length).toBe(1);
 });
 
 test('Renders counter display', () => {
-    const wrapper = shallow(<App />);
-    const counterDisplay = wrapper.find('[data-test="counter-display"]');
-    expect(counterDisplay.length).toBe(1);
+    const wrapper = setup();
+    const appComponent = findByTestAttr(wrapper, 'counter-display');
+    expect(appComponent.length).toBe(1);
 });
 
 test('Counter starts at 0', () => {
